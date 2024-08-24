@@ -1,11 +1,11 @@
 #!/usr/bin/python3
-""" FIFO cache """
-
+""" LIFOCache module
+"""
 BaseCaching = __import__('base_caching').BaseCaching
 
 
-class FIFOCache(BaseCaching):
-    """ FIFOCache defines:
+class LIFOCache(BaseCaching):
+    """ LIFOCache defines:
       - Inherits from BaseCaching
       - Caching system
     """
@@ -26,7 +26,7 @@ class FIFOCache(BaseCaching):
                 self.queue.remove(key)
             else:
                 if len(self.cache_data) >= BaseCaching.MAX_ITEMS:
-                    discard = self.queue.pop(0)
+                    discard = self.queue.pop()  # remove last element
                     del self.cache_data[discard]
                     print("DISCARD: {}".format(discard))
                 self.cache_data[key] = item
