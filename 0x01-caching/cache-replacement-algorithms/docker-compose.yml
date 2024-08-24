@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  python-app:
+    build: .
+    volumes:
+      - ./app:/usr/src/app
+    networks:
+      - app-network
+    depends_on:
+      - redis
+    container_name: python-app
+
+  redis:
+    image: redis:latest
+    volumes:
+      - redis-data:/data
+    networks:
+      - app-network
+    container_name: redis-server
+    ports:
+      - "6379:6379"
+
+volumes:
+  redis-data:
+
+networks:
+  app-network:
+    driver: bridge
